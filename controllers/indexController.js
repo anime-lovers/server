@@ -4,6 +4,12 @@ const User = require('../models/user')
 const secretKey = process.env.MY_SECRET
 
 module.exports = {
+  homepage(req, res, next) {
+    res.status(200).json({
+      message: 'successfully load homepage'
+    })
+  },
+
   findOrCreate(req, res, next) {
     let { name, email } = req.body
     User.findOne({email})

@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const {
+  homepage,
   findOrCreate,
   generateJWTToken
 } = require('../controllers/indexController')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', homepage);
 
 
 // POST
