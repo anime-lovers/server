@@ -7,7 +7,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-// app.set('view engine', 'jade');
+// app.set('view engine', 'jade')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
