@@ -20,17 +20,24 @@ module.exports = {
             console.log(err)
             return res.status(500).json()
           } 
-          console.log(result)
+          console.log('bikin doc baru',result)
+          res.locals.user = result
           next()
         })
       }
-      console.log(user)
+      console.log('doc udah ada',user)
+      res.locals.user = user
       next()  
     })
   },
 
   generateJWTToken(req, res, next) {
-    let payload = req.body
+    //local user
+    const userId = res.locals.user._id
+    const name = res.locals.user.name
+    const email = res.locals.user.email
+    const payload = { userId, name, email }
+    
     console.log('------------payload',payload)
     console.log('------------secret', secretKey)
     let token = jwt.sign(payload, secretKey)
