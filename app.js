@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const cors = require('cors')
 require('dotenv').config()
 
 const mongoose = require('mongoose')
@@ -14,6 +15,7 @@ var app = express();
 // view engine setup
 app.set('view engine', 'jade')
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
