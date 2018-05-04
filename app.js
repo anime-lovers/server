@@ -30,7 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter)
 app.use('/detail', detailRouter)
-app.use('/animelist', )
+app.use('/animelist', animelistRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
