@@ -33,9 +33,7 @@ function createDoc(name, userId) {
 module.exports = {
   auth(req, res, next) {
     let token = req.body.token
-    console.log(token)
     jwt.verify(token, secretKey, (err, decoded) => {
-      console.log('aaaaaaaaaaaaaa',decoded)
       if(err) {
         console.log(err)
         return res.status(401).json({
