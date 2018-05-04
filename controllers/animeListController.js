@@ -20,7 +20,7 @@ function findOrCreateAnimeList(animeName, userId, cb) {
   })
 }
 
-function createDoc(name, userId) {
+function createDoc(name, userId, cb) {
   AnimeList.create({ name, userId })
   .then(result => {
     cb(null, result)
