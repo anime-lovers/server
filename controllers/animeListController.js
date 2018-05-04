@@ -31,22 +31,57 @@ function createDoc(name, userId) {
 }
 
 module.exports = {
+  auth(req, res, next) {
+    let token = req.body.token
+    console.log(token)
+    jwt.verify(token, secretKey, (err, decoded) => {
+      console.log('aaaaaaaaaaaaaa',decoded)
+      if(err) {
+        console.log(err)
+        return res.status(401).json({
+          message: 'please login first'
+        })
+      }
+      res.locals.decoded = decoded
+      res.locals.animeName = req.body.title_anime
+      next()
+    })
+    
+  },
+
   inputAnime(req, res, next) {
-    const {
-      token,
-      title_anime
-    } = req.body
+    let title_anime = res.locals.animeName
+    let decoded = res.locals.decoded
 
-    let decoded = jwt.verify(token, secretKey)
-
-    console.log('--------ini decode', decoded)
-    console.log('--------ini title', title_anime)
     findOrCreateAnimeList(title_anime, decoded.userId, (err, result) => {
       if(err) res.send(500).json({data:err})
       res.status(200).json({
         message: 'anime saved',
         data:result
       })
+    })
+  },
+
+  getAnimeByUserId(req, res, next) {
+    let decoded = res.locals.decoded
+    let userId = decoded.userId
+    AnimeList.find({userId}).select('name')
+    .then(list => {
+      let nameList = list.map(function(list) {
+        return list.name
+      })
+      if (!list) {
+        return res.status(204).json({
+          message: "You don't have any favorite anime yet"
+        })
+      }
+      res.status(200).json({
+        message: 'Anime list loaded',
+        data: nameList
+      })
+    })
+    .catch(err => {
+      res.status(500).json()
     })
   }
 }
