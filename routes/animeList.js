@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  inputAnime
+  auth,
+  inputAnime,
+  getAnimeByUserId
 } = require('../controllers/animeListController')
 
 
 //POST
-
-router.post('/', inputAnime)
+router.post('/', auth, inputAnime)
+router.post('/favorites', auth, getAnimeByUserId)
 
 
 
